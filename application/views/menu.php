@@ -10,10 +10,13 @@
         <a class="nav-link" href="<?= base_url(); ?>">Início <span class="sr-only">(página atual)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="<?= base_url('empresas'); ?>">empresas</a>
+        <a class="nav-link" href="<?= base_url('registros'); ?>">Registros</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="<?= base_url('funcionarios'); ?>">Funcionários</a>
+        <a class="nav-link" href="<?= base_url('ocorrencias'); ?>">Ocorrências</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="<?= base_url('empresas'); ?>">Empresas</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="<?= base_url('cargos'); ?>">Cargos</a>
@@ -22,10 +25,7 @@
         <a class="nav-link" href="<?= base_url('contratos'); ?>">Contratos</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="<?= base_url('ocorrencias'); ?>">Ocorrências</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="<?= base_url('registros'); ?>">Registros</a>
+        <a class="nav-link" href="<?= base_url('funcionarios'); ?>">Funcionários</a>
       </li>
     </ul>
   </div>

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Funcionarios extends CI_Controller {
+class Cargos extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
@@ -18,24 +18,19 @@ class Funcionarios extends CI_Controller {
 	{
 		$crud = new grocery_CRUD();
 
-		$crud->set_crud_url_path(base_url('funcionarios/index'));
+		$crud->set_crud_url_path(base_url('cargos/index'));
 		$crud->set_language(getLang());
 
-		$crud->set_table('funcionarios');
-		$crud->set_subject('Funcionário');
+		$crud->set_table('cargos');
+		$crud->set_subject('Cargo');
 
 		$crud->display_as('nome','Nome');
-		$crud->display_as('cpf','CPF');
-		$crud->display_as('telefone','Telefone');
-		$crud->display_as('endereco','Endereço');
-		$crud->display_as('email','E-mail');
+		$crud->display_as('empresas_id','Empresa');
 
-		$crud->field_type('email','email');
+		$crud->required_fields('nome', 'empresas_id');
 
-		$crud->required_fields('nome', 'cpf');
-
-		$crud->columns('nome', 'cpf', 'telefone', 'endereco', 'email');
-		$crud->fields('nome', 'cpf', 'telefone', 'endereco', 'email');
+		$crud->columns('nome', 'empresas_id');
+		$crud->fields('nome', 'empresas_id');
 
 		$output = $crud->render();
 

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Funcionarios extends CI_Controller {
+class Contratos extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
@@ -18,24 +18,34 @@ class Funcionarios extends CI_Controller {
 	{
 		$crud = new grocery_CRUD();
 
-		$crud->set_crud_url_path(base_url('funcionarios/index'));
+		$crud->set_crud_url_path(base_url('contratos/index'));
 		$crud->set_language(getLang());
 
-		$crud->set_table('funcionarios');
-		$crud->set_subject('Funcionário');
+		$crud->set_table('contratos');
+		$crud->set_subject('Contrato');
 
-		$crud->display_as('nome','Nome');
-		$crud->display_as('cpf','CPF');
-		$crud->display_as('telefone','Telefone');
-		$crud->display_as('endereco','Endereço');
-		$crud->display_as('email','E-mail');
+		$crud->display_as('horario_trabalho','Horário de trabalho');
+		$crud->display_as('banco_horas','Banco de horas');
+		$crud->display_as('data_entrada','Admissão');
+		$crud->display_as('data_saida','Demissão');
+		$crud->display_as('funcionario_id','Funcionário');
+		$crud->display_as('empresa_id','Empresa');
+		$crud->display_as('cargo_id','Cargo');
 
-		$crud->field_type('email','email');
+		$crud->field_type('funcionario_id','dropdown',
+      array('vazio')
+    );
+    $crud->field_type('empresa_id','dropdown',
+      array('vazio')
+    );
+    $crud->field_type('cargo_id','dropdown',
+      array('vazio')
+    );
 
-		$crud->required_fields('nome', 'cpf');
+		$crud->required_fields('horario_trabalho', 'banco_horas', 'data_entrada', 'funcionario_id', 'empresa_id', 'cargo_id');
 
-		$crud->columns('nome', 'cpf', 'telefone', 'endereco', 'email');
-		$crud->fields('nome', 'cpf', 'telefone', 'endereco', 'email');
+		$crud->columns('horario_trabalho', 'banco_horas', 'data_entrada', 'data_saida', 'funcionario_id', 'empresa_id', 'cargo_id');
+		$crud->fields('horario_trabalho', 'banco_horas', 'data_entrada', 'data_saida', 'funcionario_id', 'empresa_id', 'cargo_id');
 
 		$output = $crud->render();
 

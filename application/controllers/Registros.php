@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Funcionarios extends CI_Controller {
+class Registros extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
@@ -18,24 +18,33 @@ class Funcionarios extends CI_Controller {
 	{
 		$crud = new grocery_CRUD();
 
-		$crud->set_crud_url_path(base_url('funcionarios/index'));
+		$crud->set_crud_url_path(base_url('registros/index'));
 		$crud->set_language(getLang());
 
-		$crud->set_table('funcionarios');
-		$crud->set_subject('Funcionário');
+		$crud->set_table('registros');
+		$crud->set_subject('Registro');
 
-		$crud->display_as('nome','Nome');
-		$crud->display_as('cpf','CPF');
-		$crud->display_as('telefone','Telefone');
-		$crud->display_as('endereco','Endereço');
-		$crud->display_as('email','E-mail');
+		$crud->display_as('data_hora','Data/Hora');
+		$crud->display_as('observacoes','Observações');
+		$crud->display_as('comprovante','Comprovante');
+		$crud->display_as('tipo','Tipo');
+		$crud->display_as('contrato_id','Contratado');
 
-		$crud->field_type('email','email');
+    $crud->unset_texteditor('observacoes');
+		$crud->field_type('tipo','dropdown',
+      array('vazio')
+    );
 
-		$crud->required_fields('nome', 'cpf');
+    $crud->field_type('contrato_id','dropdown',
+      array('vazio')
+    );
 
-		$crud->columns('nome', 'cpf', 'telefone', 'endereco', 'email');
-		$crud->fields('nome', 'cpf', 'telefone', 'endereco', 'email');
+		$crud->set_field_upload('comprovante','assets/uploads/comprovantes/');
+
+		$crud->required_fields('data_hora', 'tipo', 'contrato_id');
+
+		$crud->columns('data_hora', 'observacoes', 'comprovante', 'tipo', 'contrato_id');
+		$crud->fields('data_hora', 'observacoes', 'comprovante', 'tipo', 'contrato_id');
 
 		$output = $crud->render();
 

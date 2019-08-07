@@ -32,7 +32,7 @@ class Ocorrencias extends CI_Controller {
 		$crud->display_as('hora_fim','Hora fim');
 		$crud->display_as('contrato_id','Contratado');
 
-		$crud->field_type('observacoes','text');
+		$crud->unset_texteditor('observacoes');
 		$crud->field_type('tipo','dropdown',
       array(
       	'abono' => 'Abono', 
