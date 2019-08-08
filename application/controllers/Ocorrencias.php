@@ -46,9 +46,17 @@ class Ocorrencias extends CI_Controller {
 		$crud->columns('data', 'tipo', 'observacoes', 'banco_horas', 'hora_inicio', 'hora_fim', 'contrato_id');
 		$crud->fields('data', 'tipo', 'observacoes', 'banco_horas', 'hora_inicio', 'hora_fim', 'contrato_id');
 
+		$crud->callback_field('hora_inicio', array($this, 'time_callback_mask'));
+		$crud->callback_field('hora_fim', array($this, 'time_callback_mask'));
+
 		$output = $crud->render();
 
 		$this->view_output($output);
+	}
+
+	public function time_callback_mask($value = '', $primary_key = null, $field)
+	{
+    return '<input id="field-'.$field->name.'" class="form-control time" name="'.$field->name.'" type="text" value="'.$value.'">';
 	}
 
 }

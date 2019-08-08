@@ -7,6 +7,7 @@ class Cargos extends CI_Controller {
 		parent::__construct();
 
 		$this->load->library('grocery_CRUD');
+		// $this->load->model('tabelas_model');
 	}
 
 	public function view_output($output = [])
@@ -26,6 +27,13 @@ class Cargos extends CI_Controller {
 
 		$crud->display_as('nome','Nome');
 		$crud->display_as('empresas_id','Empresa');
+
+		$empresas = array();
+		foreach ($this->db->get('empresas')->result() as $empresa) {
+			$empresas[$empresa->id] = $empresa->razao_social;
+		}
+
+		$crud->field_type('empresas_id','dropdown', $empresas);
 
 		$crud->required_fields('nome', 'empresas_id');
 
