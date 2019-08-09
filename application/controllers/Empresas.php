@@ -1,7 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+include APPPATH.'/libraries/GeneralCallbacksTrait.php';
+include APPPATH.'/libraries/GeneralTrait.php';
+
 class Empresas extends CI_Controller {
+	use \GeneralTrait, \GeneralCallbacksTrait;
+	
 	public function __construct()
 	{
 		parent::__construct();
@@ -43,13 +48,6 @@ class Empresas extends CI_Controller {
 		$output = $crud->render();
 
 		$this->view_output($output);
-	}
-
-	public function callback_format_timestamps($value, $primary_key = '') {
-		if (empty($value)) {
-			return '-- --';
-		}
-		return formatDateTimestamps($value);
 	}
 
 }

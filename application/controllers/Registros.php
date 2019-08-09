@@ -1,17 +1,17 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+include APPPATH.'/libraries/GeneralTrait.php';
+include APPPATH.'/libraries/GeneralCallbacksTrait.php';
+
 class Registros extends CI_Controller {
+	use \GeneralTrait, \GeneralCallbacksTrait;
+
 	public function __construct()
 	{
 		parent::__construct();
 
 		$this->load->library('grocery_CRUD');
-	}
-
-	public function view_output($output = [])
-	{
-		$this->load->view('index', $output);
 	}
 
 	public function index()
@@ -30,14 +30,14 @@ class Registros extends CI_Controller {
 		$crud->display_as('tipo','Tipo');
 		$crud->display_as('contrato_id','Contratado');
 
-    $crud->unset_texteditor('observacoes');
+	    $crud->unset_texteditor('observacoes');
 		$crud->field_type('tipo','dropdown',
-      array('vazio')
-    );
+	      array('vazio')
+	    );
 
-    $crud->field_type('contrato_id','dropdown',
-      array('vazio')
-    );
+	    $crud->field_type('contrato_id','dropdown',
+	      array('vazio')
+	    );
 
 		$crud->set_field_upload('comprovante','assets/uploads/comprovantes/');
 
@@ -45,6 +45,10 @@ class Registros extends CI_Controller {
 
 		$crud->columns('data_hora', 'observacoes', 'comprovante', 'tipo', 'contrato_id');
 		$crud->fields('data_hora', 'observacoes', 'comprovante', 'tipo', 'contrato_id');
+
+		$crud->callback_read_field('created_at', array($this, 'callback_format_timestamps'));
+		$crud->callback_read_field('updated_at', array($this, 'callback_format_timestamps'));
+		$crud->callback_read_field('deleted_at', array($this, 'callback_format_timestamps'));
 
 		$output = $crud->render();
 

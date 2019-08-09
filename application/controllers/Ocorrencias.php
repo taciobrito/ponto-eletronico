@@ -1,17 +1,17 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+include APPPATH.'/libraries/GeneralTrait.php';
+include APPPATH.'/libraries/GeneralCallBacksTrait.php';
+
 class Ocorrencias extends CI_Controller {
+	use \GeneralTrait, \GeneralCallBacksTrait;
+
 	public function __construct()
 	{
 		parent::__construct();
 
 		$this->load->library('grocery_CRUD');
-	}
-
-	public function view_output($output = [])
-	{
-		$this->load->view('index', $output);
 	}
 
 	public function index()
@@ -34,12 +34,12 @@ class Ocorrencias extends CI_Controller {
 
 		$crud->unset_texteditor('observacoes');
 		$crud->field_type('tipo','dropdown',
-      array(
-      	'abono' => 'Abono', 
-      	'falta' => 'Falta',
-      	'feriado' => 'Feriado'
-    	)
-    );
+      		array(
+		      	'abono' => 'Abono', 
+		      	'falta' => 'Falta',
+		      	'feriado' => 'Feriado'
+	    	)
+	    );
 
 		$crud->required_fields('data', 'tipo', 'banco_horas', 'hora_inicio', 'hora_fim', 'contrato_id');
 
@@ -49,14 +49,13 @@ class Ocorrencias extends CI_Controller {
 		$crud->callback_field('hora_inicio', array($this, 'time_callback_mask'));
 		$crud->callback_field('hora_fim', array($this, 'time_callback_mask'));
 
+		$crud->callback_read_field('created_at', array($this, 'callback_format_timestamps'));
+		$crud->callback_read_field('updated_at', array($this, 'callback_format_timestamps'));
+		$crud->callback_read_field('deleted_at', array($this, 'callback_format_timestamps'));
+
 		$output = $crud->render();
 
 		$this->view_output($output);
-	}
-
-	public function time_callback_mask($value = '', $primary_key = null, $field)
-	{
-    return '<input id="field-'.$field->name.'" class="form-control time" name="'.$field->name.'" type="text" value="'.$value.'">';
 	}
 
 }

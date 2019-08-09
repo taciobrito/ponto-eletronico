@@ -1,17 +1,17 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+include APPPATH.'/libraries/GeneralTrait.php';
+include APPPATH.'/libraries/GeneralCallbacksTrait.php';
+
 class Funcionarios extends CI_Controller {
+	use \GeneralTrait, \GeneralCallbacksTrait;
+
 	public function __construct()
 	{
 		parent::__construct();
 
 		$this->load->library('grocery_CRUD');
-	}
-
-	public function view_output($output = [])
-	{
-		$this->load->view('index', $output);
 	}
 
 	public function index()
@@ -36,6 +36,10 @@ class Funcionarios extends CI_Controller {
 
 		$crud->columns('nome', 'cpf', 'telefone', 'endereco', 'email');
 		$crud->fields('nome', 'cpf', 'telefone', 'endereco', 'email');
+
+		$crud->callback_read_field('created_at', array($this, 'callback_format_timestamps'));
+		$crud->callback_read_field('updated_at', array($this, 'callback_format_timestamps'));
+		$crud->callback_read_field('deleted_at', array($this, 'callback_format_timestamps'));
 
 		$output = $crud->render();
 

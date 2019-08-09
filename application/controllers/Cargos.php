@@ -1,18 +1,16 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+include APPPATH.'/libraries/GeneralTrait.php';
+
 class Cargos extends CI_Controller {
+	use \GeneralTrait;
+
 	public function __construct()
 	{
 		parent::__construct();
 
 		$this->load->library('grocery_CRUD');
-		// $this->load->model('tabelas_model');
-	}
-
-	public function view_output($output = [])
-	{
-		$this->load->view('index', $output);
 	}
 
 	public function index()
@@ -26,19 +24,14 @@ class Cargos extends CI_Controller {
 		$crud->set_subject('Cargo');
 
 		$crud->display_as('nome','Nome');
-		$crud->display_as('empresas_id','Empresa');
+		$crud->display_as('empresa_id','Empresa');
 
-		$empresas = array();
-		foreach ($this->db->get('empresas')->result() as $empresa) {
-			$empresas[$empresa->id] = $empresa->razao_social;
-		}
+		$crud->required_fields('nome', 'empresa_id');
 
-		$crud->field_type('empresas_id','dropdown', $empresas);
+		$crud->columns('nome', 'empresa_id');
+		$crud->fields('nome', 'empresa_id');
 
-		$crud->required_fields('nome', 'empresas_id');
-
-		$crud->columns('nome', 'empresas_id');
-		$crud->fields('nome', 'empresas_id');
+		$crud->set_relation('empresa_id', 'empresas', 'razao_social');
 
 		$output = $crud->render();
 
