@@ -42,13 +42,16 @@ class Contratos extends CI_Controller {
 
 		$crud->set_relation('funcionario_id', 'funcionarios', 'nome', null, 'nome ASC');
 		$crud->set_relation('empresa_id', 'empresas', 'razao_social', null, 'razao_social ASC');
-		$crud->set_relation('cargo_id', 'cargos', 'nome', null, 'nome ASC');		
+		$crud->set_relation('cargo_id', 'cargos', 'nome', null, 'nome ASC');
+
+		$crud->callback_column('banco_horas', array($this, 'callback_banco_horas'));
+		$crud->callback_read_field('banco_horas', array($this, 'callback_banco_horas'));
+		$crud->callback_read_field('data_entrada', array($this, 'callback_format_dates'));
+		$crud->callback_read_field('data_saida', array($this, 'callback_format_dates'));
 
 		$crud->callback_read_field('created_at', array($this, 'callback_format_timestamps'));
 		$crud->callback_read_field('updated_at', array($this, 'callback_format_timestamps'));
 		$crud->callback_read_field('deleted_at', array($this, 'callback_format_timestamps'));
-
-		// $crud->callback_field('cargo_id', array($this, 'cargos_callback_list'));
 
 		$fields = array(
 			'empresa_id' => array(
@@ -62,70 +65,23 @@ class Contratos extends CI_Controller {
 				'id_field' => 'id',
 				'order_by'=> 'nome DESC',
 				'relate' => 'empresa_id',
-				'data-placeholder' => 'Selecione a empresa'
+				'data-placeholder' => 'Selecione o cargo'
 			)
 		);
 
 		$config = array(
 			'main_table' => 'contratos',
 			'main_table_primary' => 'id',
-			'url' => base_url('contratos/index'),
+			'url' => base_url('cargos/'),
+			'segment_name' => 'buscaPorEmpresa',
 		);
 
 		$dependentes = new Gc_dependent_select($crud, $fields, $config);
 
 		$output = $crud->render();
-
 		$output->output .= $dependentes->get_js();
 
 		$this->view_output($output);
-	}
-
-	public function cargos_callback_list($value = '', $primary_key = null, $field)
-	{
-		$html = '<select id="field-cargo_id" name="cargo_id" class="chosen-select" data-placeholder="Selecione Cargo" style="width: 300px; display: none;">';
-		$html = '<option value="">Selecione a empresa</option>';
-
-	  	if (!empty($this->uri->segment(self::SEGMENT_OF_ID)) && is_numeric($this->uri->segment(self::SEGMENT_OF_ID))) {
-		   	$contrato = $this->db->select('empresa_id, cargo_id')
-		      	->get_where('contratos', array('id', $this->uri->segment(self::SEGMENT_OF_ID)))
-		      	->row();
-
-		    $cargos = $this->db->select('*')
-				->get_where('cargos', array('empresa_id', $contrato->empresa_id))
-				->result();
-		 
-		   	foreach($cargos as $cargo) :
-				$html .= '<option value="'.$cargo->id.'" '.($cargo->id == $contrato->cargo_id ? 'selected' : '').'>'.$cargo->nome.'</option>';
-		   	endforeach;
-	  	}		 
-		$html .= '</select>';
-	    return $html;
-
-	    // stdClass Object
-		// (
-		//     [name] => cargo_id
-		//     [type] => int
-		//     [max_length] => 11
-		//     [default] => 
-		//     [primary_key] => 0
-		//     [db_max_length] => 11
-		//     [db_type] => int
-		//     [db_null] => 
-		//     [db_extra] => 
-		//     [required] => 1
-		//     [display_as] => Cargo
-		//     [crud_type] => relation
-		//     [extras] => Array
-		//         (
-		//             [0] => cargo_id
-		//             [1] => cargos
-		//             [2] => nome
-		//             [3] => 
-		//             [4] => nome ASC
-		//         )
-
-		// )
 	}
 
 }

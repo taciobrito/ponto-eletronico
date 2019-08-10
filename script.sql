@@ -41,9 +41,9 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `ponto_eletronico`.`cargos` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(100) NOT NULL,
-  `empresas_id` INT NOT NULL,
+  `empresa_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-    FOREIGN KEY (`empresas_id`)
+    FOREIGN KEY (`empresa_id`)
     REFERENCES `ponto_eletronico`.`empresas` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);

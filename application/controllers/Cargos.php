@@ -38,4 +38,13 @@ class Cargos extends CI_Controller {
 		$this->view_output($output);
 	}
 
+	public function buscaPorEmpresa($empresa_id = null) {
+		if (empty($empresa_id)) {
+			echo json_encode(array());
+			exit;
+		}
+		$cargos = $this->db->get_where('cargos', array('empresa_id' => $empresa_id))->result();
+		echo json_encode($cargos);
+	}
+
 }

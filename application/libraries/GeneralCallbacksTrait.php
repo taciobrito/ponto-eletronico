@@ -1,5 +1,16 @@
 <?php
 trait GeneralCallbacksTrait {
+	public function callback_banco_horas($value = '', $primary_key = '') {
+		return $value ? 'Sim' : 'Não';
+	}
+
+	public function callback_format_dates($value, $primary_key = '') {
+		if (empty($value)) {
+			return '-- --';
+		}
+		return formatDate($value);
+	}
+
 	public function callback_format_timestamps($value, $primary_key = '') {
 		if (empty($value)) {
 			return '-- --';

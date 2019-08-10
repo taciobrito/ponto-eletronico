@@ -35,6 +35,12 @@ function getLang() {
 	return 'pt-br.portuguese';
 }
 
+function formatDate($data) {
+  setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+  date_default_timezone_set('America/Sao_Paulo');
+  return strftime('%d/%m/%Y', strtotime($data));
+}
+
 function formatDateTimestamps($data) {
   setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
   date_default_timezone_set('America/Sao_Paulo');

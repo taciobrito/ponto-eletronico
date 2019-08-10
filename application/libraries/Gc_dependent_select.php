@@ -236,7 +236,7 @@ class Gc_dependent_select
             $js .= $dd_dropdowns[$i]['field'] . '.find(\'option\').remove();';
 
             $js .= 'var myOptions = "";';
-            $js .= '$.getJSON(\'' . $this->config['url'] . $this->segment_name . '/' . $dd_dropdowns[$i]['field'] . '/' . '\'+select_value, function(data) {';
+            $js .= '$.getJSON(\'' . $this->config['url'] . $this->segment_name . '/' . '\'+select_value, function(data) {';
             $js .= 'if(data==\'\'){';
 
             $js .= $dd_dropdowns[$i]['field'] . '.children().remove().end();';
@@ -249,7 +249,7 @@ class Gc_dependent_select
             $js .= $dd_dropdowns[$i]['field'] . '.append(\'<option value=""></option>\');';
             $js .= '$.each(data, function(key, val) {';
             $js .= $dd_dropdowns[$i]['field'] . '.append(';
-            $js .= '$(\'<option></option>\').val(val.value).html(val.property)';
+            $js .= '$(\'<option></option>\').val(val.'. $dd_dropdowns[$i]['id_field'] .').html(val.'. $dd_dropdowns[$i]['title'] .')';
             $js .= ');';
             $js .= '});';
             $js .= $dd_dropdowns[$i]['field'] . '.removeAttr(\'disabled\');';
