@@ -1,11 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-include APPPATH.'/libraries/GeneralTrait.php';
-
-class Principal extends CI_Controller {
-	use \GeneralTrait;
-
+class Login extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
@@ -13,11 +9,18 @@ class Principal extends CI_Controller {
 
 	public function index()
 	{
-		$this->view_output((object)array(
-			'output' => $this->load->view('principal', null, true),
+		$this->load->view('login', array(
 			'js_files' => array(),
 			'css_files' => array()
 		));
+	}
+
+	public function login()
+	{
+	}
+
+	public function logout()
+	{
 	}
 
 }

@@ -14,11 +14,6 @@ class Empresas extends CI_Controller {
 		$this->load->library('grocery_CRUD');
 	}
 
-	public function view_output($output = [])
-	{
-		$this->load->view('index', $output);
-	}
-
 	public function index()
 	{
 		$crud = new grocery_CRUD();
